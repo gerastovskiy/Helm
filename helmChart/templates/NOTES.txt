@@ -1,0 +1,23 @@
+Get the application URL by running these commands:
+{{- range $host := .Values.ingress.hosts }}
+  {{- range .paths }}
+Probes:
+a. Liveness:
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}actuator/health/liveness
+b. Readiness:
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}actuator/health/readiness
+Requests:
+a. Get all users:
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}user/getAll
+b. Get user by id:
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}user/getById/{id}
+c. Get user by username:
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}user/getByUsername/{username}
+d. Post user:
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}user/post
+e. Put user:
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}user/put
+f. Delete user by username:
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}user/deleteByAccount/{username}
+  {{- end }}
+{{- end }}

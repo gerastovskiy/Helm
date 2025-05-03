@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
+    driverClassName: org.h2.Driver
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        enable_lazy_load_no_trans: false
+        order_inserts: true
+        jdbc.batch_size: 100
+        hbm2ddl:
+          auto: validate
+  flyway:
+    enabled: true
+    validate-on-migrate: false
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+        stat: debug
+        orm:
+          jdbc:
+            bind: trace
+
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
