@@ -19,11 +19,12 @@ securityContext: {}
 image:
   repository: cyclopeye/helm
   pullPolicy: IfNotPresent
-  tag: ""
+  tag: "v0.7"
 
 service:
   type: ClusterIP
   port: 8080
+  targetPort: 8080
 
 serviceAccount:
   create: false
@@ -48,25 +49,25 @@ resources:
     memory: 256Mi
   limits:
     cpu: 1000m
-    memory: 521Mi
-#livenessProbe:
-#  httpGet:
-#    path: /actuator/health/liveness
-#    port: http
-#  initialDelaySeconds: 10
-#  periodSeconds: 3
-#readinessProbe:
-#  httpGet:
-#    path: /actuator/health/readiness
-#    port: http
-#  initialDelaySeconds: 10
-#  periodSeconds: 3
+    memory: 512Mi
+livenessProbe:
+  httpGet:
+    path: /actuator/health/liveness
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+readinessProbe:
+  httpGet:
+    path: /actuator/health/readiness
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 
